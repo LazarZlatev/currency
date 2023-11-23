@@ -2,3 +2,10 @@ Django==4.2.7
 django-extensions
 ipython
 
+#flake8
+flake8
+flake8-builtins
+flake8-print
+flake8-breakpoint
+
+
