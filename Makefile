@@ -3,7 +3,7 @@ manage_py:=  python3 ./app/manage.py
 run:
 	$(manage_py) runserver 0.0.0.0:8000
 
-makemigrations:
+migrations:
 	$(manage_py) makemigrations
 
 migrate:
