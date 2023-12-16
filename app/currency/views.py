@@ -1,26 +1,73 @@
-from django.http.response import HttpResponse
-from django.shortcuts import render
-from currency.models import ContactUs
-from currency.models import Rate
+from currency.forms import RateForm
+from currency.models import Rate, ContactUs
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, TemplateView
+from django.urls import reverse_lazy
+from django.core.mail import send_mail
 
 
-def rate_list(request):
-    rates = Rate.objects.all()
-    context = {
-        'rates': rates
-    }
-    return render(request, 'rate_list.html', context)
+class RateListView(ListView):
+    queryset = Rate.objects.all()
+    template_name = 'rate_list.html'
 
 
-def contactus_list(request):
-    contactus = ContactUs.objects.all()
-    context = {
-        'contactus': contactus
-    }
-    return render(request, 'contact_us.html', context)
+class RateDetailView(DetailView):
+    queryset = Rate.objects.all()
+    template_name = 'rate_detail.html'
 
 
-def status_code(request):
-    return HttpResponse('Redirect!',
-                        status=301,
-                        headers={'Location': '/rate/list'})
+class RateCreateView(CreateView):
+    form_class = RateForm
+    template_name = 'rate_create.html'
+    success_url = reverse_lazy('currency:rate-list')
+
+
+class RateDeleteView(DeleteView):
+    template_name = 'rate_delete.html'
+    success_url = reverse_lazy('currency:rate-list')
+    model = Rate
+
+
+class RateUpdateView(UpdateView):
+    form_class = RateForm
+    template_name = 'rate_update.html'
+    success_url = reverse_lazy('currency:rate-list')
+    model = Rate
+
+
+class IndexView(TemplateView):
+    template_name = 'index.html'
+
+
+class ContactUsCreateView(CreateView):
+    model = ContactUs
+    template_name = 'contactus_create.html'
+    success_url = reverse_lazy('index')
+    fields = (
+        'name',
+        'email',
+        'subject',
+        'body'
+    )
+
+    def _send_email(self):
+        from django.conf import settings
+        recipient = settings.DEFAULT_FROM_EMAIL
+        subject = 'User Contact Us'
+        body = f'''
+                Name: {self.object.name}
+                Email: {self.object.email}
+                Subject: {self.object.subject}
+                Body: {self.object.body}
+                '''
+        send_mail(
+            subject,
+            body,
+            recipient,
+            [recipient],
+            fail_silently=False,
+        )
+
+    def form_valid(self, form):
+        redirect = super().form_valid(form)
+        self._send_email()
+        return redirect
