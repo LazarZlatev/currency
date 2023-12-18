@@ -7,10 +7,13 @@ migrations:
 	$(manage_py) makemigrations
 
 migrate:
-	$(manage_py) migrate
+	$(manage_py) migrate currency
 
 shell:
 	$(manage_py) shell_plus --print-sql
+
+createsuperuser:
+	$(manage_py) createsuperuser
 
 flake:
 	flake8 app/

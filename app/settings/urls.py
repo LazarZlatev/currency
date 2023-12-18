@@ -1,12 +1,10 @@
-
 from django.contrib import admin
-from django.urls import path
-from currency.views import rate_list, contactus_list, status_code
-
+from django.urls import path, include
+from currency.views import IndexView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('rate/list', rate_list),
-    path('contactus/list', contactus_list),
-    path('sc/', status_code),
+    path('currency/', include('currency.urls')),
+    path("__debug__/", include("debug_toolbar.urls")),
+    path('', IndexView.as_view(), name='index'),
 ]

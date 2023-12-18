@@ -1,6 +1,11 @@
 Django==4.2.7
 django-extensions
 ipython
+django-debug-toolbar
+django-admin-rangefilter
+django-import-export
+https://github.com/darklow/django-suit/tarball/v2
+
 
 #flake8
 flake8
@@ -8,4 +13,4 @@ flake8-builtins
 flake8-print
 flake8-breakpoint
 
-
+Currency~=0.1.2
