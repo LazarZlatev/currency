@@ -1,5 +1,8 @@
 from currency.forms import RateForm
 from currency.models import Rate, ContactUs
+from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, TemplateView
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
@@ -10,21 +13,27 @@ class RateListView(ListView):
     template_name = 'rate_list.html'
 
 
-class RateDetailView(DetailView):
+class RateDetailView(LoginRequiredMixin, DetailView):
     queryset = Rate.objects.all()
     template_name = 'rate_detail.html'
 
 
-class RateCreateView(CreateView):
+class RateCreateView(UserPassesTestMixin, CreateView):
     form_class = RateForm
     template_name = 'rate_create.html'
     success_url = reverse_lazy('currency:rate-list')
 
+    def test_func(self):
+        return self.request.user.is_superuser
 
-class RateDeleteView(DeleteView):
+
+class RateDeleteView(UserPassesTestMixin, DeleteView):
     template_name = 'rate_delete.html'
     success_url = reverse_lazy('currency:rate-list')
     model = Rate
+
+    def test_func(self):
+        return self.request.user.is_superuser
 
 
 class RateUpdateView(UpdateView):
@@ -71,3 +80,18 @@ class ContactUsCreateView(CreateView):
         redirect = super().form_valid(form)
         self._send_email()
         return redirect
+
+
+class ProfileView(LoginRequiredMixin, UpdateView):
+    model = get_user_model()
+    template_name = 'profile.html'
+    success_url = reverse_lazy('index')
+    fields = (
+        'first_name',
+        'last_name'
+    )
+
+    def get_object(self, queryset=None):
+        qs = self.get_queryset()
+
+        return qs.get(id=self.request.user.id)

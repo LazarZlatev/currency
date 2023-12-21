@@ -24,9 +24,13 @@
           <td>{{rate.created}}</td>
           <td>{{rate.get_currency_type_display}}</td>
           <td>{{rate.source}}</td>
+          {% if request.user.is_authenticated and request.user.is_superuser  %}
           <td><a href="{% url 'currency:rate-update' rate.id %}"> Edit </a></td>
           <td><a href="{% url 'currency:rate-delete' rate.id %}"> Delete </a></td>
           <td><a href="{% url 'currency:rate-detail' rate.id %}"> Detail </a></td>
+          {% elif request.user.is_authenticated and not request.user.is_superuser %}
+          <td><a href="{% url 'currency:rate-detail' rate.id %}"> Detail </a></td>
+          {%  endif %}
       </tr>
 
      {% endfor %}
