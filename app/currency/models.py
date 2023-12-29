@@ -8,12 +8,30 @@ class Rate(models.Model):
     buy = models.DecimalField(_('Buy'), max_digits=6, decimal_places=2)
     sell = models.DecimalField(_('Sell'), max_digits=6, decimal_places=2)
     created = models.DateTimeField(_('Created'), auto_now_add=True)
-    currency_type = models.SmallIntegerField(_('Currency type'), choices=CurrencyTypeChoices.choices,
-                                             default=CurrencyTypeChoices.USD)
-    source = models.CharField(_('Source'), max_length=254)
+    currency_type = models.SmallIntegerField(
+        _('Currency type'),
+        choices=CurrencyTypeChoices.choices,
+        default=CurrencyTypeChoices.USD
+    )
+    source = models.ForeignKey('currency.Source', on_delete=models.CASCADE,related_name='rates')
+
+    class Meta:
+        verbose_name = _('Rate')
+        verbose_name_plural = _('Rates')
 
     def __str__(self):
         return f'{self.buy}-{self.sell}-{self.source}'
+
+
+class Source(models.Model):
+    name = models.CharField(_('Source'), max_length=64)
+
+    class Meta:
+        verbose_name = _('Source')
+        verbose_name_plural = _('Sources')
+
+    def __str__(self):
+        return self.name
 
 
 class ContactUs(models.Model):

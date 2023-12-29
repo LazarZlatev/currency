@@ -22,10 +22,10 @@
           <td>{{rate.created}}</td>
           <td>{{rate.currency_type}}</td>
           <td>{{rate.source}}</td>
-          {% if request.user.is_superuser %}
+{#          {% if request.user.is_superuser %}#}
           <td><a href="{% url 'currency:rate-update' rate.id %}"> Edit </a></td>
           <td><a href="{% url 'currency:rate-delete' rate.id %}"> Delete </a></td>
-          {% endif %}
+{#          {% endif %}#}
       </tr>
 </table>
 

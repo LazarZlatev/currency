@@ -1,14 +1,14 @@
 from currency.forms import RateForm
 from currency.models import Rate, ContactUs
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.mixins import UserPassesTestMixin
+# from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, TemplateView
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
 
 
 class RateListView(ListView):
-    queryset = Rate.objects.all()
+    queryset = Rate.objects.all().select_related('source')
     template_name = 'rate_list.html'
 
 
@@ -17,7 +17,7 @@ class RateDetailView(LoginRequiredMixin, DetailView):
     template_name = 'rate_detail.html'
 
 
-class RateCreateView(UserPassesTestMixin, CreateView):
+class RateCreateView(CreateView):
     form_class = RateForm
     template_name = 'rate_create.html'
     success_url = reverse_lazy('currency:rate-list')
@@ -26,7 +26,7 @@ class RateCreateView(UserPassesTestMixin, CreateView):
         return self.request.user.is_superuser
 
 
-class RateDeleteView(UserPassesTestMixin, DeleteView):
+class RateDeleteView(DeleteView):
     template_name = 'rate_delete.html'
     success_url = reverse_lazy('currency:rate-list')
     model = Rate
