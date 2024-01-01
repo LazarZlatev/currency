@@ -4,7 +4,7 @@ run:
 	$(manage_py) runserver 0.0.0.0:8000
 
 migrations:
-	$(manage_py) makemigrations
+	$(manage_py) makemigrations currency
 
 migrate:
 	$(manage_py) migrate currency

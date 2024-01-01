@@ -1,6 +1,5 @@
 from currency.forms import RateForm
 from currency.models import Rate, ContactUs
-from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, TemplateView
@@ -80,18 +79,3 @@ class ContactUsCreateView(CreateView):
         redirect = super().form_valid(form)
         self._send_email()
         return redirect
-
-
-class ProfileView(LoginRequiredMixin, UpdateView):
-    model = get_user_model()
-    template_name = 'profile.html'
-    success_url = reverse_lazy('index')
-    fields = (
-        'first_name',
-        'last_name'
-    )
-
-    def get_object(self, queryset=None):
-        qs = self.get_queryset()
-
-        return qs.get(id=self.request.user.id)
