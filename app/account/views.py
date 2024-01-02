@@ -4,6 +4,7 @@ from django.views.generic import UpdateView, CreateView, RedirectView
 from django.urls import reverse_lazy
 from account.forms import UserSignUpForm
 
+
 User = get_user_model()
 
 
