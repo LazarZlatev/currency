@@ -20,7 +20,6 @@ class ProfileView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         qs = self.get_queryset()
-
         return qs.get(id=self.request.user.id)
 
 
