@@ -1,40 +1,47 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
-{% block title %}
-   <br> Rate list <br>
-{% endblock title %}
-
 <a href="{% url 'currency:rate-create' %}">Create</a><br>
-<table id="table">
+<div class="row">
+<table class="table table-stripped">
     <tr>
-        <th>ID</th>
-        <th>BUY</th>
-        <th>SELL</th>
-        <th>CREATED</th>
-        <th>CURRENCY TYPE</th>
-        <th>SOURCE</th>
+        <th scope="col">ID</th>
+        <th scope="col">BUY</th>
+        <th scope="col">SELL</th>
+        <th scope="col">CREATED</th>
+        <th scope="col">CURRENCY TYPE</th>
+        <th scope="col">SOURCE</th>
     </tr>
    {% for rate in object_list %}
       <tr>
-          <td>{{rate.id}}</td>
+          <th scope="row">{{rate.id}}</th>
           <td>{{rate.buy}}</td>
           <td>{{rate.sell}}</td>
           <td>{{rate.created}}</td>
           <td>{{rate.get_currency_type_display}}</td>
           <td>{{rate.source}}</td>
-{#          {% if request.user.is_authenticated and request.user.is_superuser  %}#}
-          <td><a href="{% url 'currency:rate-update' rate.id %}"> Edit </a></td>
-          <td><a href="{% url 'currency:rate-delete' rate.id %}"> Delete </a></td>
-{#          <td><a href="{% url 'currency:rate-detail' rate.id %}"> Detail </a></td>#}
-{#          {% elif request.user.is_authenticated and not request.user.is_superuser %}#}
-          <td><a href="{% url 'currency:rate-detail' rate.id %}"> Detail </a></td>
-{#          {%  endif %}#}
+          {% if request.user.is_authenticated %}
+          <td>
+              <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     Actions
+                    </button>
+
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{% url 'currency:rate-update' rate.id %}">Edit</a>
+                    <a class="dropdown-item" href="{% url 'currency:rate-delete' rate.id %}">Delete</a>
+                    <a class="dropdown-item" href="{% url 'currency:rate-detail' rate.id %}">Detail</a>
+                  </div>
+              </div>
+          </td>
+          {%  endif %}
       </tr>
 
      {% endfor %}
 </table>
+</div>
 
 {% endblock content %}
 

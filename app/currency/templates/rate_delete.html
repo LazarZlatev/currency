@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %} Create rate {% endblock title %}
 
@@ -6,7 +7,7 @@
     Are you sure you want to delete rate with id {{rate.id}}
    <form method="post">
        {% csrf_token %}
-       <button type="submit">Yes,delete</button>
+       <button type="submit" class="btn btn-primary">Yes,delete</button>
    </form>
 
 {% endblock content %}

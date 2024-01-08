@@ -4,7 +4,9 @@ ipython
 django-debug-toolbar
 django-admin-rangefilter
 django-import-export
-https://github.com/darklow/django-suit/tarball/v2
+django-storages
+boto3
+
 
 
 #flake8

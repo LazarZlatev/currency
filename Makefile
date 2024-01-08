@@ -4,10 +4,10 @@ run:
 	$(manage_py) runserver 0.0.0.0:8000
 
 migrations:
-	$(manage_py) makemigrations currency
+	$(manage_py) makemigrations
 
 migrate:
-	$(manage_py) migrate currency
+	$(manage_py) migrate
 
 shell:
 	$(manage_py) shell_plus --print-sql
