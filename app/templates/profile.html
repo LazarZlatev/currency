@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
-
+{% load crispy_forms_tags %}
 {% block title %} Profile {% endblock%}
 
 {% block content %}
@@ -9,8 +8,8 @@
    <img style="height: 100px; width: 100px" src="{{ user.avatar_url }}" alt="avatar">
    <form method="post" enctype="multipart/form-data">
        {% csrf_token %}
-       {{form.as_p}}
-       <button type="submit">Update</button>
+       {{form|crispy}}
+       <button type="submit" class="btn btn-primary">Update</button>
    </form>
 
 {% endblock %}
