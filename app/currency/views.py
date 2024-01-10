@@ -1,9 +1,11 @@
+from datetime import datetime, timedelta
 from currency.forms import RateForm
 from currency.models import Rate, ContactUs
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, TemplateView
 from django.urls import reverse_lazy
-from django.core.mail import send_mail
+
+from currency.tasks import send_email_in_background
 
 
 class RateListView(ListView):
@@ -56,9 +58,13 @@ class ContactUsCreateView(CreateView):
         'body'
     )
 
+    def _slow(self):
+        from time import sleep
+        sleep(10)
+
     def _send_email(self):
-        from django.conf import settings
-        recipient = settings.DEFAULT_FROM_EMAIL
+        # from django.conf import settings
+        # recipient = settings.DEFAULT_FROM_EMAIL
         subject = 'User Contact Us'
         body = f'''
                 Name: {self.object.name}
@@ -66,12 +72,14 @@ class ContactUsCreateView(CreateView):
                 Subject: {self.object.subject}
                 Body: {self.object.body}
                 '''
-        send_mail(
-            subject,
-            body,
-            recipient,
-            [recipient],
-            fail_silently=False,
+        eta = datetime.now() + timedelta(seconds=15)
+        #   print(eta)
+        send_email_in_background.apply_async(
+            kwargs={
+                'subject': subject,
+                'body': body
+            },
+            eta=eta
         )
 
     def form_valid(self, form):
