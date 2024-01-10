@@ -7,7 +7,9 @@ from django.conf import settings
 @shared_task
 def debug():
     sleep(10)
-    print('DEBUG\n' * 10)
+
+
+#  print('DEBUG\n' * 10)
 
 
 @shared_task(autoretry_for=(ConnectionError,), retry_kwargs={

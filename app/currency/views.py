@@ -63,8 +63,8 @@ class ContactUsCreateView(CreateView):
         sleep(10)
 
     def _send_email(self):
-        from django.conf import settings
-        recipient = settings.DEFAULT_FROM_EMAIL
+        # from django.conf import settings
+        # recipient = settings.DEFAULT_FROM_EMAIL
         subject = 'User Contact Us'
         body = f'''
                 Name: {self.object.name}
@@ -73,7 +73,7 @@ class ContactUsCreateView(CreateView):
                 Body: {self.object.body}
                 '''
         eta = datetime.now() + timedelta(seconds=15)
-        print(eta)
+        #   print(eta)
         send_email_in_background.apply_async(
             kwargs={
                 'subject': subject,
