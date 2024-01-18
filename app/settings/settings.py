@@ -52,7 +52,8 @@ EXTERNAL_APPS = [
     'django_extensions',
     'debug_toolbar',
     'rangefilter',
-    'import_export'
+    'import_export',
+    'django_filters',
 ]
 
 INTERNAL_APPS = [
