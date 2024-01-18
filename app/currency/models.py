@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from currency.choices import CurrencyTypeChoices
+from currency.choices import CurrencyTypeChoices, CurrencyTypeChoicesMono
 
 
 # Create your models here.
@@ -12,6 +12,11 @@ class Rate(models.Model):
         _('Currency type'),
         choices=CurrencyTypeChoices.choices,
         default=CurrencyTypeChoices.USD
+    )
+    currency_type_mono = models.SmallIntegerField(
+        _('Currency type'),
+        choices=CurrencyTypeChoicesMono.choices,
+        default=CurrencyTypeChoicesMono.USD
     )
     source = models.ForeignKey('currency.Source', on_delete=models.CASCADE, related_name='rates')
 
@@ -25,6 +30,7 @@ class Rate(models.Model):
 
 class Source(models.Model):
     name = models.CharField(_('Source'), max_length=64)
+    code_name = models.CharField(_('Code name'), max_length=64)
 
     class Meta:
         verbose_name = _('Source')

@@ -1,12 +1,14 @@
 Django==4.2.7
 django-extensions
 ipython
+Jinja2
 django-debug-toolbar
 django-admin-rangefilter
 django-import-export
 django-storages
 boto3
 Celery
+requests
 
 
 
