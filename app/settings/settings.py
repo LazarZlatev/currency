@@ -54,6 +54,7 @@ EXTERNAL_APPS = [
     'rangefilter',
     'import_export',
     'django_filters',
+    'phonenumber_field',
 ]
 
 INTERNAL_APPS = [
