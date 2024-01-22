@@ -55,6 +55,7 @@ EXTERNAL_APPS = [
     'import_export',
     'django_filters',
     'phonenumber_field',
+    'rest_framework'
 ]
 
 INTERNAL_APPS = [
@@ -131,6 +132,20 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'account.User'
 
+REST_FRAMEWORK = {
+    'DEFAULT_RENDER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        # 'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework_simplejwt.authentication.JWTAuthentication',  # 401
+    # ),
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #     'rest_framework.permissions.IsAuthenticated',  # 403
+    # ),
+    # 'TEST_REQUEST_DEFAULT_FORMAT': 'json'
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -192,7 +207,6 @@ LOGOUT_REDIRECT_URL = reverse_lazy('index')
 
 HTTP_METHOD = 'http'
 DOMAIN = '0.0.0.0:8000'
-
 
 CELERY_BEAT_SCHEDULE = {
     'parse_monobank': {
