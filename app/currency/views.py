@@ -1,16 +1,27 @@
+import re
 from datetime import datetime, timedelta
 from currency.forms import RateForm
 from currency.models import Rate, ContactUs
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, TemplateView
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, TemplateView
 from django.urls import reverse_lazy
-
+from django_filters.views import FilterView
 from currency.tasks import send_email_in_background
+from currency.filters import RateFilter
 
 
-class RateListView(ListView):
-    queryset = Rate.objects.all().select_related('source')
+class RateListView(FilterView):
+    queryset = Rate.objects.all().select_related('source').order_by('-created')
     template_name = 'rate_list.html'
+    paginate_by = 21
+    filterset_class = RateFilter
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        query_parameters = self.request.GET.urlencode()
+        context['filter_params'] = re.sub(r'page=\d+', '', query_parameters).lstrip('&')
+
+        return context
 
 
 class RateDetailView(LoginRequiredMixin, DetailView):
