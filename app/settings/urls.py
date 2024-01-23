@@ -9,6 +9,7 @@ urlpatterns = [
     path('auth/', include('django.contrib.auth.urls')),
     path('auth/', include('account.urls')),
     path('currency/', include('currency.urls')),
+    path('api/currency/', include('currency.api.urls')),
     path('_debug__/', include('debug_toolbar.urls')),
     path('', IndexView.as_view(), name='index'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

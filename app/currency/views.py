@@ -69,10 +69,6 @@ class ContactUsCreateView(CreateView):
         'body'
     )
 
-    def _slow(self):
-        from time import sleep
-        sleep(10)
-
     def _send_email(self):
         # from django.conf import settings
         # recipient = settings.DEFAULT_FROM_EMAIL
