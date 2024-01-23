@@ -135,7 +135,8 @@ AUTH_USER_MODEL = 'account.User'
 REST_FRAMEWORK = {
     'DEFAULT_RENDER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
-        # 'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework_xml.renderers.XMLRenderer',
     ),
     # 'DEFAULT_AUTHENTICATION_CLASSES': (
     #     'rest_framework_simplejwt.authentication.JWTAuthentication',  # 401

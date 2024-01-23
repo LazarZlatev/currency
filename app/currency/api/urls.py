@@ -1,9 +1,9 @@
-from django.urls import path
-from currency.api.views import RateListAPIView, RateDetailAPIView
+from currency.api.views import RateViewSet
+from rest_framework import routers
 
+router = routers.SimpleRouter(trailing_slash=True)
+router.register(r'rates', RateViewSet, basename='rate')
 app_name = 'currency_api'
 
 urlpatterns = [
-    path('rates/', RateListAPIView.as_view(), name='rate-list'),
-    path('rates/<int:pk>/', RateDetailAPIView.as_view(), name='rate-update'),
-]
+]+router.urls
