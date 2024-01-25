@@ -26,6 +26,7 @@ urlpatterns = [
                   path('auth/', include('account.urls')),
                   path('currency/', include('currency.urls')),
                   path('api/currency/', include('currency.api.urls')),
+                  path('api_contactus/', include('currency.api_contactus.urls')),
                   path('api/account/', include('account.api.urls')),
                   path('_debug__/', include('debug_toolbar.urls')),
                   path('', IndexView.as_view(), name='index'),

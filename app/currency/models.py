@@ -51,6 +51,9 @@ class ContactUs(models.Model):
         verbose_name = _('Contact Us')
         verbose_name_plural = _('Contact Us')
 
+        def __str__(self):
+            return self.name
+
 
 class RequestResponseLog(models.Model):
     path = models.CharField(_('Path'), max_length=256)
