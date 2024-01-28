@@ -25,3 +25,7 @@ flake8-breakpoint
 Currency~=0.1.2
 djangorestframework-yaml~=2.0.0
 django-suit~=2.0a2
+
+#pytest
+pytest
+pytest-django
