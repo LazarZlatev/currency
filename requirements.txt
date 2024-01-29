@@ -29,3 +29,7 @@ django-suit~=2.0a2
 #pytest
 pytest
 pytest-django
+model-bakery
+pytest-cov
+pytest-mock
+
