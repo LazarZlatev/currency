@@ -6,13 +6,14 @@ django-debug-toolbar
 django-admin-rangefilter
 django-import-export
 django-storages
-django-filter
+django-filter~=23.5
 boto3
-Celery
-requests
-djangorestframework
-
-
+Celery~=5.3.6
+requests~=2.31.0
+djangorestframework~=3.14.0
+djangorestframework-xml
+djangorestframework-simplejwt
+drf-yasg
 
 
 #flake8
@@ -22,3 +23,5 @@ flake8-print
 flake8-breakpoint
 
 Currency~=0.1.2
+djangorestframework-yaml~=2.0.0
+django-suit~=2.0a2
