@@ -17,7 +17,6 @@ drf-yasg
 pymemcache
 
 
-
 #flake8
 flake8
 flake8-builtins
